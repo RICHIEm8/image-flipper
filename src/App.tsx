@@ -1,25 +1,22 @@
+import { AspectRatio, Box, Button, Flex, Heading, Image } from '@chakra-ui/react';
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Flex flexDirection="column" alignItems="center" bgColor="green.500" minHeight="100vh">
+      <Heading as="h1" color="white">
+        Image Flipper
+      </Heading>
+      <Flex my={7.5}>
+        <Button>Flip Vertical</Button>
+        <Button>Flip Horizontal</Button>
+        <Button>Rotate 90°</Button>
+        <Button>Rotate 180°</Button>
+      </Flex>
+      <AspectRatio width="100%" maxW="500px" ratio={1}>
+        <Image src="rushia.jpg" alt="rushia" />
+      </AspectRatio>
+    </Flex>
   );
 }
 

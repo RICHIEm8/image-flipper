@@ -19,20 +19,19 @@ export const App = () => {
 
   const onSubmit = (e: any) => {
     e.preventDefault();
+    setImg(query);
+    setQuery('');
+  };
 
-    if (_.includes(query, 'jpg' || 'png')) {
-      setImg(query);
-      setQuery('');
-    } else {
-      toast({
-        title: 'Invalid image url',
-        status: 'error',
-        position: 'top',
-        duration: 3000,
-      });
-      setImg('');
-      setQuery('');
-    }
+  const onError = (error: string | React.SyntheticEvent<HTMLImageElement, Event>) => {
+    toast({
+      title: 'Invalid image url',
+      status: 'error',
+      position: 'top',
+      duration: 3000,
+    });
+    setImg('');
+    setQuery('');
   };
 
   return (
@@ -62,7 +61,7 @@ export const App = () => {
       </Flex>
       {img ? (
         <AspectRatio width="100%" maxW="500px" ratio={1}>
-          <Image src={img} />
+          <Image src={img} onError={onError} />
         </AspectRatio>
       ) : null}
     </Flex>

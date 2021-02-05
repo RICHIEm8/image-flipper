@@ -8,7 +8,8 @@ import React, { useState } from 'react';
 export const App = () => {
   const [query, setQuery] = useState('');
   const [img, setImg] = useState('');
-  const [transform, setTransform] = useState('');
+  const [rotateAngle, setRotateAngle] = useState(0);
+  const [flipAxis, setFlipAxis] = useState([1, 1]);
 
   const toast = useToast();
 
@@ -29,6 +30,22 @@ export const App = () => {
     setQuery('');
   };
 
+  const rotate = (deg: number) => {
+    const newAngle = rotateAngle + deg;
+    setRotateAngle(newAngle);
+  };
+
+  const flip = (xAxis: number, yAxis: number) => {
+    const newXAxis = flipAxis[0] * xAxis;
+    const newYAxis = flipAxis[1] * yAxis;
+    setFlipAxis([newXAxis, newYAxis]);
+  };
+
+  const reset = () => {
+    setRotateAngle(0);
+    setFlipAxis([1, 1]);
+  };
+
   return (
     <Flex flexDirection="column" alignItems="center" bgColor="green.500" minHeight="100vh">
       <Heading as="h1" color="white">
@@ -45,31 +62,31 @@ export const App = () => {
               value={query}
             />
             <Button type="submit">Submit</Button>
-            <Button rightIcon={<BiReset />} onClick={() => setTransform('')}>
+            <Button rightIcon={<BiReset />} onClick={() => reset()}>
               Reset
             </Button>
           </HStack>
         </form>
       </Flex>
       <Flex my={7.5}>
-        <Button rightIcon={<GiVerticalFlip />} onClick={() => setTransform('scaleY(-1)')}>
-          Flip Vertical
-        </Button>
-        <Button rightIcon={<GiHorizontalFlip />} onClick={() => setTransform('scaleX(-1)')}>
+        <Button rightIcon={<GiHorizontalFlip />} onClick={() => flip(-1, 1)}>
           Flip Horizontal
         </Button>
-        <Button rightIcon={<AiOutlineRotateLeft />} onClick={() => setTransform('rotate(-90deg)')}>
+        <Button rightIcon={<GiVerticalFlip />} onClick={() => flip(1, -1)}>
+          Flip Vertical
+        </Button>
+        <Button rightIcon={<AiOutlineRotateLeft />} onClick={() => rotate(-90)}>
           90°
         </Button>
-        <Button rightIcon={<AiOutlineRotateRight />} onClick={() => setTransform('rotate(90deg)')}>
+        <Button rightIcon={<AiOutlineRotateRight />} onClick={() => rotate(90)}>
           90°
         </Button>
-        <Button rightIcon={<MdCropRotate />} onClick={() => setTransform('rotate(180deg)')}>
+        <Button rightIcon={<MdCropRotate />} onClick={() => rotate(180)}>
           Rotate 180°
         </Button>
       </Flex>
       {img ? (
-        <Box transform={`${transform}`}>
+        <Box transform={`rotate(${rotateAngle}deg) scale(${flipAxis[0]}, ${flipAxis[1]})`}>
           <Image className="image" src={img} boxSize={750} onError={onError} fit="scale-down" />
         </Box>
       ) : null}

@@ -1,3 +1,3 @@
 ## image flipper written in typescript
 
-![Alt text](image_flipper_screenshot.png 'image_flipper screenshot')
+![Alt text](src/image-flipper-screenshot.png 'image-flipper screenshot')
